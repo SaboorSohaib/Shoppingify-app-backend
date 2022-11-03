@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-image: linear-gradient(to bottom, rgba(115, 115, 121, 0.522), rgba(102, 89, 99, 0.73)),
+    url('bg1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+    
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    height: 100vh;
+}
+
+.key {
+    border: 3px solid black;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all .07s;
+}
+
+.play {
+    transform: scale(1.1);
+    border-color:yellow;
+    box-shadow: 0 0 10px yellow;
+}
+
+kbd {
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+}
+
+span {
+    color: rgb(0, 0, 0);
+}
