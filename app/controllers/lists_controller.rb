@@ -1,38 +1,51 @@
 class ListsController < ApplicationController
+  before_action :set_user
+  before_action :set_list, only: [:show, :update, :destroy]
+
   def index
-    @lists = List.all
+    @lists = @user.lists
     render json: @lists
   end
 
   def show
-    @list = List.find(params[:id])
     render json: @list
   end
 
   def new
-    @list = @user.lists.new(list_params)
+    @list = @user.lists.new
   end
 
   def create
-    @user = User.find(params[:id])
     @list = @user.lists.create(list_params)
     if @list.save
-      render json: @list
+      render json: @list,  status: :created
     else
-      render json: @list.errors
+      render json: @list.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    @list = List.find(params[:id])
+    if @list.update(list_params)
+      render json: @list, status: :ok
+    else
+      render json: @list.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    @list = List.find(params[:id])
     @list.destroy
+    head :no_content
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
+  def set_list
+    @list = @user.lists.find(params[:id])
+  end
 
   def list_params
     params.require(:list).permit(:name, :user_id)
