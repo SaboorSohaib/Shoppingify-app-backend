@@ -1,5 +1,4 @@
 class Item < ApplicationRecord
-    has_many :purchases
     belongs_to :list
     belongs_to :category
 
