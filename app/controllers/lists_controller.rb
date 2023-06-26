@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+  before_action :authenticate_request
   before_action :set_user
   before_action :set_list, only: [:show, :update, :destroy]
 
