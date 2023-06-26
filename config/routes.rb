@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :users
+    resources :lists, only: [:index, :show, :create, :update, :destroy] do
+      resources :items, only: [:index, :show, :create, :update, :destroy] do
+        collection do
+          get :top_items
+          get :top_categories
+        end
+      end
+    end
+  resources :categories, only: [:index, :create]
 end
