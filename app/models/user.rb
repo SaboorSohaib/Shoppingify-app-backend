@@ -10,8 +10,4 @@ class User < ApplicationRecord
   has_one :active_list, -> { where(active: true) }, class_name: 'List'
 
   validates :name, presence: true, length: { minimum: 3, maximum: 50 }
-
-  def jwt_payload
-    super
-  end
 end

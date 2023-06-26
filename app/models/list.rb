@@ -1,7 +1,7 @@
 class List < ApplicationRecord
-    belongs_to :user
-    has_many :items
+  belongs_to :user
+  has_many :items
 
-    validates :user_id, uniqueness: { scope: :active, message: 'User can have only one active list' }
-    validates :name, presence: true, length: { minimum: 4, maximum: 50 }
+  validates :user_id, uniqueness: { scope: :active, message: 'User can have only one active list' }
+  validates :name, presence: true, length: { minimum: 4, maximum: 50 }
 end

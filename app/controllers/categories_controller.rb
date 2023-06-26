@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_request
-  def index
-  end
+  def index; end
 
   def new
     @category = Category.new

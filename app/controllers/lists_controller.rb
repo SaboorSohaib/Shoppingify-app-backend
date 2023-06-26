@@ -1,7 +1,7 @@
 class ListsController < ApplicationController
   before_action :authenticate_request
   before_action :set_user
-  before_action :set_list, only: [:show, :update, :destroy]
+  before_action :set_list, only: %i[show update destroy]
 
   def index
     @lists = @user.lists
@@ -19,7 +19,7 @@ class ListsController < ApplicationController
   def create
     @list = @user.lists.create(list_params)
     if @list.save
-      render json: @list,  status: :created
+      render json: @list, status: :created
     else
       render json: @list.errors, status: :unprocessable_entity
     end

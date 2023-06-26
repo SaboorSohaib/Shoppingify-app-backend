@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_request
   before_action :set_list
-  before_action :set_item, only: [:show, :update, :destroy]
+  before_action :set_item, only: %i[show update destroy]
 
   def index
     @items = @list.items
@@ -19,7 +19,7 @@ class ItemsController < ApplicationController
   def create
     @item = @list.items.create(item_params)
     if @item.save
-      render json: @item,  status: :created
+      render json: @item, status: :created
     else
       render json: @item.errors, status: :unprocessable_entity
     end
