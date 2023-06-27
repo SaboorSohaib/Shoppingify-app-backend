@@ -5,7 +5,7 @@ class CreateItems < ActiveRecord::Migration[7.0]
       t.text :note
       t.text :image
       t.integer :quantity
-      t.belongs_to :list, null: false, foreign_key: true
+      t.belongs_to :list, null: true, foreign_key: true
       t.belongs_to :category, null: false, foreign_key: true
 
       t.timestamps
