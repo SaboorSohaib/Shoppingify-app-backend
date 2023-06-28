@@ -1,6 +1,9 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_request
-  def index; end
+  def index 
+    @categories = Category.all
+    render json: @categories
+  end
 
   def new
     @category = Category.new
