@@ -12,12 +12,10 @@ class ListsController < ApplicationController
     render json: @list
   end
 
-  def new
-    @list = @user.lists.new
-  end
-
   def create
-    @list = @user.lists.create(list_params)
+    @user.lists.update_all(active: false)
+
+    @list = @user.lists.create(list_params.merge(active: true))
     if @list.save
       render json: @list, status: :created
     else
@@ -26,7 +24,11 @@ class ListsController < ApplicationController
   end
 
   def update
-    if @list.update(list_params)
+    @user.lists.where.not(id: @list.id).each do |list|
+      list.update(active: false)
+    end 
+
+    if @list.update(list_params.merge(active: true).except(:user_id))
       render json: @list, status: :ok
     else
       render json: @list.errors, status: :unprocessable_entity
@@ -34,14 +36,20 @@ class ListsController < ApplicationController
   end
 
   def destroy
+    @list = List.find(params[:id])
     @list.destroy
     head :no_content
+  end
+
+  def deactivate
+    @list = List.find(params[:id])
+    @list.deactivate
   end
 
   private
 
   def set_user
-    @user = User.find(params[:user_id])
+    @user = User.find_by(params[:user_id])
   end
 
   def set_list
@@ -49,6 +57,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name, :user_id)
+    params.require(:list).permit(:name, :active)
   end
 end
