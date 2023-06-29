@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_request
-  before_action :set_list
+  before_action :set_categorey
   before_action :set_item, only: %i[show update destroy]
 
   def index
-    @items = @list.items
+    @items = @categorie.items
     render json: @items
   end
 
@@ -12,12 +12,12 @@ class ItemsController < ApplicationController
     render json: @item
   end
 
-  def new
-    @item = Item.new
-  end
+  # def new
+  #   @item = Item.new
+  # end
 
   def create
-    @item = @list.items.create(item_params)
+    @item = @categorie.items.create(item_params)
     if @item.save
       render json: @item, status: :created
     else
@@ -34,6 +34,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
+    @item = Item.find(params[:id])
     @item.destroy
     head :no_content
   end
@@ -61,15 +62,15 @@ class ItemsController < ApplicationController
 
   private
 
-  def set_list
-    @list = List.find(params[:list_id])
+  def set_categorey
+    @categorie = Category.find(params[:category_id])
   end
 
   def set_item
-    @item = @list.items.find(params[:id])
+    @item = @categorie.items.find(params[:id])
   end
 
   def item_params
-    params.require(:item).permit(:name, :note, :image, :category_id)
+    params.require(:item).permit(:name, :note, :image, :quantity, :category_id)
   end
 end
