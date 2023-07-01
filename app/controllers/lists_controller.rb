@@ -26,7 +26,7 @@ class ListsController < ApplicationController
   def update
     @user.lists.where.not(id: @list.id).each do |list|
       list.update(active: false)
-    end 
+    end
 
     if @list.update(list_params.merge(active: true).except(:user_id))
       render json: @list, status: :ok

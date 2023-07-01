@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before(:each) do
-    @user = User.create(name: "Abid", email: "abid@gmail.com", password: "123456")
+    @user = User.create(name: 'Abid', email: 'abid@gmail.com', password: '123456')
   end
 
   it 'is valid with valid attributes' do
@@ -20,12 +20,12 @@ RSpec.describe User, type: :model do
   end
 
   it 'is not valid with a password less than 6 characters' do
-    @user.password = "123"
+    @user.password = '123'
     expect(@user).to_not be_valid
   end
 
   it 'is valid with a name more than 3 characters' do
-    @user.name = "Ali"
+    @user.name = 'Ali'
     expect(@user).to be_valid
   end
 
